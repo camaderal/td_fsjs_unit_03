@@ -16,8 +16,10 @@ button {
 
 body {
   font: 1em/1.5;
-  color: rgba(6, 49, 68, 0.9);
-	background: #CDE0FB;
+  color: rgba(34, 16, 58, 0.9);
+	background-image: url("../imgs/background.jpg");
+	background-repeat: repeat;
+    background-position: center top;  
 }
 
 header {
@@ -40,9 +42,9 @@ a {
 
 form {
 	padding: .875em 1.875em 1.875em;
-	background: #9BBEEF;
-	border: 2px solid rgba(8, 63, 87, 0.6);
-	border-radius: 3px;
+	background: rgb(255, 255, 255, 0.5);
+	border: 10px solid rgb(185, 100, 255, 0.5);
+	border-radius: 10px;
 }
 
 fieldset,
@@ -90,7 +92,7 @@ input {
 	font-weight: 500;
 	padding: .8em;
 	background: #e9f6fb;
-	border: 2px solid rgb(111, 157, 220);
+	border: 2px solid rgb(185, 100, 255, 0.5);
 	border-radius: 3px;
 	outline: none;
 }
@@ -106,25 +108,37 @@ input[type="radio"] {
 	display: inline-block;
 }
 
+input[type="checkbox"]:disabled{
+	background: rgba(255, 16, 58, 0.9);
+}
+
 button {
 	color: #fff;
 	padding: .55em 1.25em;
-	background: #083f57;
+	background: rgb(185, 100, 255, 0.5);
 	margin: 1.25em 0 .5em;
 	cursor: pointer;
-	border: 2px solid black;
 	border-radius: 4px;
 	transition: all 0.5s;
 }
 
 button:hover {
-	background: #6F9DDC;
+	background: rgb(49, 19, 66);
 }
 
 input, 
 select, 
 option {
 	font-family: 'roboto', sans-serif;
+}
+
+.error {
+	background: rgb(223, 116, 116, 0.5);
+}
+.errorLabel {
+	color: rgb(255, 0, 0);
+	font-size: 1em;
+	font-weight: 100;
 }
 
 /* ================================= 
