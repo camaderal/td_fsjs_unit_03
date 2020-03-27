@@ -42,7 +42,7 @@ a {
 
 form {
 	padding: .875em 1.875em 1.875em;
-	background: rgb(255, 255, 255, 0.5);
+	background: rgb(255, 255, 255, 0.8);
 	border: 10px solid rgb(185, 100, 255, 0.5);
 	border-radius: 10px;
 }
@@ -108,10 +108,6 @@ input[type="radio"] {
 	display: inline-block;
 }
 
-input[type="checkbox"]:disabled{
-	background: rgba(255, 16, 58, 0.9);
-}
-
 button {
 	color: #fff;
 	padding: .55em 1.25em;
@@ -133,7 +129,7 @@ option {
 }
 
 .error {
-	background: rgb(223, 116, 116, 0.5);
+	background: rgba(233, 133, 200, 0.5);
 }
 .errorLabel {
 	color: rgb(255, 0, 0);

@@ -195,35 +195,45 @@ const loadPaymentDisplay = () =>{
 paymentSelect.addEventListener("change", loadPaymentDisplay);
 paymentSelect.removeChild(paymentSelect.firstElementChild);
 paymentSelect.value="credit card";
+ccNumInput.maxLength = 16;
+zipInput.maxLength = 5;
+cvvInput.maxLength = 3;
 loadPaymentDisplay();
  
  /**
   * Form validation
   */
 document.querySelector("form").addEventListener("submit", (e)=>{
-    e.preventDefault();
-    validateName();
-    validateEmail();
-    validateActivities();
-    validateCreditCardInfo();
+    let hasNoErrors = validateName();
+    hasNoErrors = validateEmail() && hasNoErrors;
+    hasNoErrors = validateActivities() && hasNoErrors;
+    hasNoErrors = validateCreditCardInfo() && hasNoErrors;
+
+    if(!hasNoErrors){
+        e.preventDefault();
+    }
 });
 
 /**
  * Validates "Name"
  * 
  * - Name field can't be blank.
+ * @return {boolean} true: validation succesful/ false: validation failed
  */
 function validateName(){
     hideError(["name"], "nameError");
     if(nameInput.value.trim() == ""){
         showError(["name"], "nameError", ERROR_NAME_REQUIRED);
+        return false;
     }
+    return true;
 }
 
 /**
  * Validates "Email"
  * 
- * - Email field must be a validly formatted e-mail addres
+ * - Email field must be a validly formatted e-mail address
+ * @return {boolean} true: validation succesful/ false: validation failed
  */
 function validateEmail(){
     const mailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i;
@@ -231,19 +241,24 @@ function validateEmail(){
     hideError(["mail"], "mailError");
     if(mailValue != "" && !mailRegex.test(mailValue)){
         showError(["mail"], "mailError", ERROR_MAIL_INVALID);
+        return false;
     }
+    return true;
 }
 
 /**
  * Validates "Activities"
  * 
  * - User must select at least one checkbox under the "Register for Activities" section of the form.
+ * @return {boolean} true: validation succesful/ false: validation failed
  */
 function validateActivities(){
     hideError([], "activitiesError");
     if(document.querySelectorAll(".activities input[type='checkbox']:checked").length == 0){
         showError([], "activitiesError", ERROR_ACTIVITY_REQUIRED);
+        return false;
     }
+    return true;
 }
 
 /**
@@ -258,30 +273,38 @@ function validateActivities(){
  * - CVV
  *   - must not be empty
  *   - must be composed of 3 digits
+ * @return {boolean} true: validation succesful/ false: validation failed
  */
 function validateCreditCardInfo(){
     const ccFields = ["cc-num","zip","cvv"];
     hideError(ccFields, "creditCardError");
+    let hasNoErrors = true;
     if(paymentSelect.value === "credit card"){
         if(ccNumInput.value.trim() == ""){
             showError(["cc-num"], "creditCardError", ERROR_CC_NUM_REQUIRED);
+            hasNoErrors = false;
         }else if(!/^[0-9]{13,16}$/.test(ccNumInput.value)){
             showError(["cc-num"], "creditCardError", ERROR_CC_NUM_INVALID);
+            hasNoErrors = false;
         }
 
         if(zipInput.value.trim() == ""){
             showError(["zip"], "creditCardError", ERROR_ZIP_REQUIRED);
+            hasNoErrors = false;
         }else if(!/^[0-9]{5}$/.test(zipInput.value)) {
             showError(["zip"], "creditCardError", ERROR_ZIP_INVALID);
+            hasNoErrors = false;
         }
 
         if(cvvInput.value.trim() == ""){
             showError(["cvv"], "creditCardError", ERROR_CVV_REQUIRED);
+            hasNoErrors = false;
         }else if(!/^[0-9]{3}$/.test(cvvInput.value)) {
             showError(["cvv"], "creditCardError", ERROR_CVV_INVALID);
-        }            
+            hasNoErrors = false;
+        }
     }
-
+    return hasNoErrors;
 }
 
 /**
