@@ -2,6 +2,7 @@
  * Error messages 
  */
 const ERROR_NAME_REQUIRED = "※ Name is required.";
+const ERROR_MAIL_REQUIRED = "※ E-mail is required.";
 const ERROR_MAIL_INVALID = "※ E-mail is invalid.";
 const ERROR_ACTIVITY_REQUIRED = "※ Needs to register for at least one activity."
 const ERROR_CC_NUM_REQUIRED = "※ Card number is required.";
@@ -19,6 +20,7 @@ const ERROR_CVV_INVALID = "※ CVV is invalid. Only accepts 3 digits.";
 const nameInput = document.getElementById("name");
 const mailInput = document.getElementById("mail");
 const titleSelect = document.getElementById("title");
+const otherTitleInput = document.getElementById("other-title");
 
 // 'T-shirt Info'
 const colorJsPunsDiv = document.getElementById("colors-js-puns");
@@ -58,16 +60,6 @@ nameError.style.display = "none";
 const mailError = createElement("label", [{property:"id", value: "mailError"}, {property:"className", value: "errorLabel"}]);
 mailInput.parentElement.insertBefore(mailError, mailInput);
 mailError.style.display = "none";
-
-// Input for other title when 'Job Role' === 'Other'
-const otherTitleInputProperties =  [
-    {property:"type", value: "text"}, 
-    {property:"placeholder", value: "Your Job Role"},
-    {property:"id", value: "other-title"},
- ]
-const otherTitleInput = createElement("input", otherTitleInputProperties);
-otherTitleInput.style.display = "none";
-titleSelect.parentElement.appendChild(otherTitleInput);
 
 // Error label for 'Register for Activities'
 const activitiesError = createElement("label", [{property:"id", value: "activitiesError"}, {property:"className", value: "errorLabel"}]);
@@ -112,6 +104,9 @@ titleSelect.addEventListener("change", (e)=>{
         otherTitleInput.value="";
     }
 });
+
+// Other Title Input initially set to display == "none"
+otherTitleInput.style.display = "none";
 
 // 'T-Shirt Info' section
 
@@ -239,7 +234,13 @@ function validateEmail(){
     const mailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i;
     const mailValue = mailInput.value.trim();
     hideError(["mail"], "mailError");
-    if(mailValue != "" && !mailRegex.test(mailValue)){
+
+    if(mailValue == "" ){
+        showError(["mail"], "mailError", ERROR_MAIL_REQUIRED);
+        return false;
+    }
+
+    if(!mailRegex.test(mailValue)){
         showError(["mail"], "mailError", ERROR_MAIL_INVALID);
         return false;
     }
