@@ -90,8 +90,8 @@ nameInput.autofocus = true;
 nameInput.focus();
 
 // add listeners for validation
-nameInput.addEventListener("keyup", (e)=>{validateName()});
-mailInput.addEventListener("blur", (e)=>{validateEmail()});
+nameInput.addEventListener("keyup", (e)=>{validateName()}); // Real-time validation
+mailInput.addEventListener("blur", (e)=>{validateEmail()}); // Validation on blur.
 
 // 'Job Role' section
 
